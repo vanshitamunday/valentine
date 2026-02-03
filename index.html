@@ -25,9 +25,8 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* GIF Takes up more than half the box height area */
         .mood-gif {
-            width: 240px; height: 240px; /* Large focal point */
+            width: 240px; height: 240px; 
             object-fit: contain; margin-bottom: 10px; border-radius: 25px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -128,16 +127,18 @@
 
     function createHeart() {
         const heart = document.createElement("div");
-        const symbols = ["🎈", "❤️", "💕", "✨", "🌸"];
+        const symbols = ["🎈", "❤️", "💕", "✨", "🌸", "🌹", "💖", "🥰"];
         heart.classList.add("floating-heart");
         heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
         heart.style.left = Math.random() * 95 + "vw";
-        heart.style.fontSize = (20 + Math.random() * 25) + "px";
-        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+        heart.style.fontSize = (20 + Math.random() * 30) + "px";
+        heart.style.animationDuration = (3 + Math.random() * 4) + "s";
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 7000);
+        setTimeout(() => heart.remove(), 6000);
     }
-    setInterval(createHeart, 500);
+
+    // Default floating speed
+    let floatingInterval = setInterval(createHeart, 400);
 
     yesBtn.addEventListener("click", () => {
         btns.style.display = "none";
@@ -145,14 +146,22 @@
         noBtn.style.display = "none";
         msg.style.display = "block";
         
-        // Change to a very happy cat GIF
         moodGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Z6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif";
         
+        // Boost regular floating frequency
+        clearInterval(floatingInterval);
+        setInterval(createHeart, 150);
+
+        // Instant burst of 100 emojis
+        for (let i = 0; i < 100; i++) {
+            setTimeout(createHeart, i * 30);
+        }
+        
         confetti({
-            particleCount: 150,
-            spread: 70,
+            particleCount: 250,
+            spread: 100,
             origin: { y: 0.6 },
-            colors: ['#ff4d6d', '#ffccd5', '#ffffff']
+            colors: ['#ff4d6d', '#ffccd5', '#ffffff', '#ffafcc']
         });
 
         sound.play().catch(() => {});
