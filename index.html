@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Valentine 💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Be My Valentine ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink: #ff4d6d;
-            --dark-pink: #c9184a;
-            --soft-pink: #ffccd5;
+            --rose: #ff4d6d;
+            --deep-rose: #c9184a;
         }
 
         body {
             margin: 0;
             height: 100vh;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #fff0f3 0%, #ffccd5 100%);
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, #fff5f7 0%, #ffdee5 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,107 +23,89 @@
             touch-action: manipulation;
         }
 
-        /* Animated Gradient Background */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
-            animation: move 10s infinite linear;
-            z-index: 0;
-        }
-
-        @keyframes move {
-            from { transform: translate(-20%, -20%); }
-            to { transform: translate(10%, 10%); }
-        }
-
         .container {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 40px 25px;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px 20px;
+            border-radius: 40px;
             text-align: center;
             width: 85%;
-            max-width: 350px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            max-width: 340px;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.9);
             z-index: 2;
-            position: relative;
         }
 
         h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.8rem;
-            color: var(--dark-pink);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--deep-rose);
             margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .buttons {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             gap: 15px;
-            min-height: 60px;
+            min-height: 130px;
         }
 
         button {
             border: none;
-            padding: 14px 28px;
+            padding: 16px 40px;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 85%;
         }
 
         #yesBtn {
-            background: linear-gradient(45deg, var(--pink), #ff758f);
+            background: linear-gradient(45deg, var(--rose), #ff8fa3);
             color: white;
-            animation: pulse 1.5s infinite;
-            z-index: 5;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            animation: pulse 1.8s infinite;
         }
 
         #noBtn {
-            background: #ffffff;
-            color: #6c757d;
-            position: relative; /* JS will change this to fixed when needed */
+            background: #f0f0f0;
+            color: #777;
+            position: relative;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 77, 109, 0); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
             100% { transform: scale(1); }
         }
 
         .message {
             display: none;
-            font-family: 'Pacifico', cursive;
-            font-size: 1.4rem;
-            color: var(--dark-pink);
-            animation: fadeIn 0.8s ease-out;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--deep-rose);
+            animation: slideUp 0.6s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .floating-heart {
+        .floating-item {
             position: absolute;
             user-select: none;
             pointer-events: none;
             z-index: 1;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.05));
-            animation: floatUp 5s linear forwards;
+            animation: floatUp 6s ease-in forwards;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(10vh) rotate(0deg); opacity: 1; }
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
     </style>
@@ -133,15 +114,15 @@
 
 <div class="container">
     <div id="content">
-        <h1>Will you be my Valentine? 💘</h1>
+        <h1>Will you be my Valentine? ❤️</h1>
         <div class="buttons" id="btns">
-            <button id="yesBtn">Yes! 💖</button>
-            <button id="noBtn">No 😜</button>
+            <button id="yesBtn">Yes! 🥰</button>
+            <button id="noBtn">No 😢</button>
         </div>
         <div class="message" id="msg">
-            Hehe 😌💘<br>
+            Hehe 😌❤️<br>
             I knew you’d say yes!<br>
-            <span style="font-size: 1rem; font-family: 'Poppins';">I love you so much! ❤️</span>
+            <span style="font-size: 1.1rem; font-family: 'Montserrat'; font-weight: 600;">I love you so much! ❤️</span>
         </div>
     </div>
 </div>
@@ -155,55 +136,49 @@
     const noBtn = document.getElementById("noBtn");
     const msg = document.getElementById("msg");
     const btns = document.getElementById("btns");
-    const sound = document.getElementById("loveSound");
     const h1 = document.querySelector("h1");
+    const sound = document.getElementById("loveSound");
 
-    // "Runaway" No Button Logic
-    function escape(btn) {
-        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+    function moveButton() {
+        // Keeps the button within the visible viewport padding
+        const padding = 20;
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
         
-        btn.style.position = "fixed";
-        btn.style.left = `${x}px`;
-        btn.style.top = `${y}px`;
+        noBtn.style.position = "fixed";
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+        noBtn.style.zIndex = "1000";
     }
 
-    noBtn.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        escape(noBtn);
-    });
-    noBtn.addEventListener("mouseover", () => escape(noBtn));
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
+    noBtn.addEventListener("mouseover", moveButton);
 
-    // Floating Hearts
-    function createHeart() {
-        const heart = document.createElement("div");
-        const icons = ["💖", "💗", "💓", "🎈", "🌸"];
-        heart.classList.add("floating-heart");
-        heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "-5vh";
-        heart.style.fontSize = (15 + Math.random() * 20) + "px";
-        heart.style.animationDuration = (3 + Math.random() * 3) + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
+    function createFloatingEffect() {
+        const item = document.createElement("div");
+        const symbols = ["🎈", "❤️", "💕", "✨", "🌸"];
+        item.classList.add("floating-item");
+        item.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        item.style.left = Math.random() * 95 + "vw";
+        item.style.fontSize = (20 + Math.random() * 25) + "px";
+        item.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 7000);
     }
 
-    setInterval(createHeart, 400);
+    setInterval(createFloatingEffect, 500);
 
-    // Yes Click
     yesBtn.addEventListener("click", () => {
         btns.style.display = "none";
         h1.style.display = "none";
         msg.style.display = "block";
-        
-        // Try playing sound (browsers might block auto-play without interaction)
-        sound.play().catch(e => console.log("Audio ready"));
+        sound.play().catch(() => {});
 
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
-        // Celebration explosion
+        // Celebration burst
         for (let i = 0; i < 50; i++) {
-            setTimeout(createHeart, i * 50);
+            setTimeout(createFloatingEffect, i * 60);
         }
     });
 </script>
