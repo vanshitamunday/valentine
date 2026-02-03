@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Be My Valentine ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root { --rose: #ff4d6d; --deep-rose: #c9184a; }
@@ -19,18 +19,26 @@
         .container {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 30px 20px; border-radius: 40px; text-align: center;
-            width: 85%; max-width: 340px; border: 2px solid rgba(255, 255, 255, 0.9);
+            padding: 35px 20px; border-radius: 40px; text-align: center;
+            width: 88%; max-width: 360px; border: 2px solid rgba(255, 255, 255, 0.9);
             box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2); z-index: 2;
         }
 
-        /* GIF Container */
+        /* Larger GIF styling */
         .mood-gif {
-            width: 150px; height: 150px; object-fit: contain;
-            margin-bottom: 10px; border-radius: 20px;
+            width: 180px; height: 180px; /* Increased size */
+            object-fit: contain; margin-bottom: 15px; border-radius: 25px;
+            transition: all 0.3s ease;
         }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--deep-rose); margin-bottom: 20px; }
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic;
+            font-size: 1.9rem; 
+            color: var(--deep-rose); 
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
 
         .buttons {
             display: flex; flex-direction: column; align-items: center;
@@ -57,8 +65,8 @@
             100% { transform: scale(1); }
         }
 
-        .message { display: none; font-family: 'Dancing Script', cursive; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .message h2 { font-size: 2.2rem; color: var(--deep-rose); margin: 10px 0; }
+        .message { display: none; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .message h2 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.3rem; color: var(--deep-rose); margin: 10px 0; }
         .message p { font-family: 'Montserrat'; font-weight: 600; font-size: 1.1rem; color: var(--rose); margin: 5px 0; }
 
         @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
@@ -109,9 +117,8 @@
     const moodGif = document.getElementById("moodGif");
     const sound = document.getElementById("loveSound");
 
-    // No button logic
     function moveButton() {
-        const moveRange = 100;
+        const moveRange = 120; // Slightly larger move range for larger screens
         const randomX = Math.floor(Math.random() * (moveRange * 2)) - moveRange;
         const randomY = Math.floor(Math.random() * (moveRange * 2)) - moveRange;
         noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
@@ -120,7 +127,6 @@
     noBtn.addEventListener("mouseover", moveButton);
     noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
 
-    // Floating Hearts
     function createHeart() {
         const heart = document.createElement("div");
         const symbols = ["🎈", "❤️", "💕", "✨", "🌸"];
@@ -134,36 +140,25 @@
     }
     setInterval(createHeart, 500);
 
-    // Yes Click Event
     yesBtn.addEventListener("click", () => {
-        // Hide UI
         btns.style.display = "none";
         mainTitle.style.display = "none";
         noBtn.style.display = "none";
-        
-        // Show Message
         msg.style.display = "block";
         
-        // Change to Happy Mood GIF
+        // Change to a bigger, happier cat GIF
         moodGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Z6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif";
+        moodGif.style.width = "220px";
+        moodGif.style.height = "220px";
         
-        // Confetti Burst
-        var count = 200;
-        var defaults = { origin: { y: 0.7 }, colors: ['#ff4d6d', '#ffccd5', '#ffffff'] };
+        // Premium Confetti Burst
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff4d6d', '#ffccd5', '#ffffff']
+        });
 
-        function fire(particleRatio, opts) {
-          confetti(Object.assign({}, defaults, opts, {
-            particleCount: Math.floor(count * particleRatio)
-          }));
-        }
-
-        fire(0.25, { spread: 26, startVelocity: 55 });
-        fire(0.2, { spread: 60 });
-        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-        fire(0.1, { spread: 120, startVelocity: 45 });
-
-        // Play Sound & Vibrate
         sound.play().catch(() => {});
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
     });
