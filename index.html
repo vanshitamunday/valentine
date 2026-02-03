@@ -5,81 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Be My Valentine ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --rose: #ff4d6d;
-            --deep-rose: #c9184a;
-        }
+        :root { --rose: #ff4d6d; --deep-rose: #c9184a; }
 
         body {
-            margin: 0;
-            height: 100vh;
-            font-family: 'Montserrat', sans-serif;
+            margin: 0; height: 100vh; font-family: 'Montserrat', sans-serif;
             background: linear-gradient(180deg, #fff5f7 0%, #ffdee5 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            touch-action: manipulation;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden; touch-action: manipulation;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 40px 20px;
-            border-radius: 40px;
-            text-align: center;
-            width: 85%;
-            max-width: 340px;
-            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            z-index: 2;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 30px 20px; border-radius: 40px; text-align: center;
+            width: 85%; max-width: 340px; border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2); z-index: 2;
         }
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            color: var(--deep-rose);
-            margin-bottom: 30px;
+        /* GIF Container */
+        .mood-gif {
+            width: 150px; height: 150px; object-fit: contain;
+            margin-bottom: 10px; border-radius: 20px;
         }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--deep-rose); margin-bottom: 20px; }
 
         .buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            min-height: 150px;
-            position: relative; /* Container for the No button to move within */
+            display: flex; flex-direction: column; align-items: center;
+            gap: 15px; min-height: 140px; position: relative;
         }
 
         button {
-            border: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 85%;
-            transition: transform 0.2s ease-out;
+            border: none; padding: 16px 40px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            width: 85%; transition: transform 0.2s ease-out;
         }
 
         #yesBtn {
             background: linear-gradient(45deg, var(--rose), #ff8fa3);
-            color: white;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
-            animation: pulse 1.8s infinite;
-            z-index: 10;
+            color: white; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            animation: pulse 1.8s infinite; z-index: 10;
         }
 
-        #noBtn {
-            background: #f0f0f0;
-            color: #777;
-            position: relative; 
-            z-index: 5;
-            /* Smooth sliding effect */
-            transition: all 0.2s ease;
-        }
+        #noBtn { background: #f0f0f0; color: #777; position: relative; z-index: 5; transition: all 0.2s ease; }
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -87,25 +57,15 @@
             100% { transform: scale(1); }
         }
 
-        .message {
-            display: none;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: var(--deep-rose);
-            animation: slideUp 0.6s ease-out;
-        }
+        .message { display: none; font-family: 'Dancing Script', cursive; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .message h2 { font-size: 2.2rem; color: var(--deep-rose); margin: 10px 0; }
+        .message p { font-family: 'Montserrat'; font-weight: 600; font-size: 1.1rem; color: var(--rose); margin: 5px 0; }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 
-        .floating-item {
-            position: absolute;
-            user-select: none;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatUp 6s ease-in forwards;
+        .floating-heart {
+            position: absolute; user-select: none; pointer-events: none;
+            z-index: 1; animation: floatUp 6s linear forwards;
         }
 
         @keyframes floatUp {
@@ -119,15 +79,19 @@
 
 <div class="container">
     <div id="content">
-        <h1>Will you be my Valentine? ❤️</h1>
+        <img id="moodGif" class="mood-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHF4YmtqZnd6cnR6bm9uNGRueXF6NnJ6eHpxYnF6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="waiting cat">
+        
+        <h1 id="mainTitle">Will you be my Valentine? ❤️</h1>
+        
         <div class="buttons" id="btns">
             <button id="yesBtn">Yes! 🥰</button>
             <button id="noBtn">No 🥺</button>
         </div>
+
         <div class="message" id="msg">
-            Hehe 😌❤️<br>
-            I knew you’d say yes!<br>
-            <span style="font-size: 1.1rem; font-family: 'Montserrat'; font-weight: 600;">I love you so much! ❤️</span>
+            <h2>Hehe 😌❤️</h2>
+            <p>I knew you’d say yes!</p>
+            <p>I love you so much! ❤️</p>
         </div>
     </div>
 </div>
@@ -141,53 +105,67 @@
     const noBtn = document.getElementById("noBtn");
     const msg = document.getElementById("msg");
     const btns = document.getElementById("btns");
-    const h1 = document.querySelector("h1");
+    const mainTitle = document.getElementById("mainTitle");
+    const moodGif = document.getElementById("moodGif");
     const sound = document.getElementById("loveSound");
 
-    // The No button moves within a restricted range so it stays on screen but is unreachable
+    // No button logic
     function moveButton() {
-        // Range of movement (in pixels)
-        const moveRange = 100; 
-        
+        const moveRange = 100;
         const randomX = Math.floor(Math.random() * (moveRange * 2)) - moveRange;
         const randomY = Math.floor(Math.random() * (moveRange * 2)) - moveRange;
-        
         noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
     }
 
     noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("touchstart", (e) => {
-        e.preventDefault(); 
-        moveButton();
-    });
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
 
-    function createFloatingEffect() {
-        const item = document.createElement("div");
+    // Floating Hearts
+    function createHeart() {
+        const heart = document.createElement("div");
         const symbols = ["🎈", "❤️", "💕", "✨", "🌸"];
-        item.classList.add("floating-item");
-        item.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-        item.style.left = Math.random() * 95 + "vw";
-        item.style.fontSize = (20 + Math.random() * 25) + "px";
-        item.style.animationDuration = (4 + Math.random() * 4) + "s";
-        document.body.appendChild(item);
-        setTimeout(() => item.remove(), 7000);
+        heart.classList.add("floating-heart");
+        heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = Math.random() * 95 + "vw";
+        heart.style.fontSize = (20 + Math.random() * 25) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 7000);
     }
+    setInterval(createHeart, 500);
 
-    setInterval(createFloatingEffect, 500);
-
+    // Yes Click Event
     yesBtn.addEventListener("click", () => {
+        // Hide UI
         btns.style.display = "none";
-        h1.style.display = "none";
-        msg.style.display = "block";
-        noBtn.style.display = "none"; 
+        mainTitle.style.display = "none";
+        noBtn.style.display = "none";
         
-        sound.play().catch(() => {});
+        // Show Message
+        msg.style.display = "block";
+        
+        // Change to Happy Mood GIF
+        moodGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Z6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif";
+        
+        // Confetti Burst
+        var count = 200;
+        var defaults = { origin: { y: 0.7 }, colors: ['#ff4d6d', '#ffccd5', '#ffffff'] };
 
-        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-
-        for (let i = 0; i < 50; i++) {
-            setTimeout(createFloatingEffect, i * 60);
+        function fire(particleRatio, opts) {
+          confetti(Object.assign({}, defaults, opts, {
+            particleCount: Math.floor(count * particleRatio)
+          }));
         }
+
+        fire(0.25, { spread: 26, startVelocity: 55 });
+        fire(0.2, { spread: 60 });
+        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+        fire(0.1, { spread: 120, startVelocity: 45 });
+
+        // Play Sound & Vibrate
+        sound.play().catch(() => {});
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
     });
 </script>
 </body>
