@@ -19,36 +19,34 @@
         .container {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 35px 20px; border-radius: 40px; text-align: center;
+            padding: 25px 20px; border-radius: 40px; text-align: center;
             width: 88%; max-width: 360px; border: 2px solid rgba(255, 255, 255, 0.9);
             box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2); z-index: 2;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Larger GIF styling */
+        /* GIF Takes up more than half the box height area */
         .mood-gif {
-            width: 180px; height: 180px; /* Increased size */
-            object-fit: contain; margin-bottom: 15px; border-radius: 25px;
-            transition: all 0.3s ease;
+            width: 240px; height: 240px; /* Large focal point */
+            object-fit: contain; margin-bottom: 10px; border-radius: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         h1 { 
             font-family: 'Playfair Display', serif; 
-            font-style: italic;
-            font-size: 1.9rem; 
-            color: var(--deep-rose); 
-            margin-bottom: 25px;
-            font-weight: 600;
+            font-style: italic; font-size: 1.7rem; 
+            color: var(--deep-rose); margin-bottom: 20px;
         }
 
         .buttons {
             display: flex; flex-direction: column; align-items: center;
-            gap: 15px; min-height: 140px; position: relative;
+            gap: 12px; width: 100%; min-height: 120px;
         }
 
         button {
-            border: none; padding: 16px 40px; border-radius: 50px;
+            border: none; padding: 16px; border-radius: 50px;
             font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            width: 85%; transition: transform 0.2s ease-out;
+            width: 80%; transition: transform 0.2s ease-out;
         }
 
         #yesBtn {
@@ -57,19 +55,21 @@
             animation: pulse 1.8s infinite; z-index: 10;
         }
 
-        #noBtn { background: #f0f0f0; color: #777; position: relative; z-index: 5; transition: all 0.2s ease; }
+        #noBtn { background: #f0f0f0; color: #777; position: relative; z-index: 5; }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.06); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
-        .message { display: none; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .message h2 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.3rem; color: var(--deep-rose); margin: 10px 0; }
-        .message p { font-family: 'Montserrat'; font-weight: 600; font-size: 1.1rem; color: var(--rose); margin: 5px 0; }
-
-        @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+        .message { display: none; text-align: center; }
+        .message p { 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic; font-weight: 600; 
+            font-size: 1.4rem; color: var(--deep-rose); 
+            margin: 8px 0; line-height: 1.4;
+        }
 
         .floating-heart {
             position: absolute; user-select: none; pointer-events: none;
@@ -86,9 +86,9 @@
 <body>
 
 <div class="container">
+    <img id="moodGif" class="mood-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHF4YmtqZnd6cnR6bm9uNGRueXF6NnJ6eHpxYnF6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="cute cat">
+    
     <div id="content">
-        <img id="moodGif" class="mood-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHF4YmtqZnd6cnR6bm9uNGRueXF6NnJ6eHpxYnF6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="waiting cat">
-        
         <h1 id="mainTitle">Will you be my Valentine? ❤️</h1>
         
         <div class="buttons" id="btns">
@@ -97,7 +97,6 @@
         </div>
 
         <div class="message" id="msg">
-            <h2>Hehe 😌❤️</h2>
             <p>I knew you’d say yes!</p>
             <p>I love you so much! ❤️</p>
         </div>
@@ -118,7 +117,7 @@
     const sound = document.getElementById("loveSound");
 
     function moveButton() {
-        const moveRange = 120; // Slightly larger move range for larger screens
+        const moveRange = 80; 
         const randomX = Math.floor(Math.random() * (moveRange * 2)) - moveRange;
         const randomY = Math.floor(Math.random() * (moveRange * 2)) - moveRange;
         noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
@@ -146,12 +145,9 @@
         noBtn.style.display = "none";
         msg.style.display = "block";
         
-        // Change to a bigger, happier cat GIF
+        // Change to a very happy cat GIF
         moodGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Z6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6eXp6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif";
-        moodGif.style.width = "220px";
-        moodGif.style.height = "220px";
         
-        // Premium Confetti Burst
         confetti({
             particleCount: 150,
             spread: 70,
