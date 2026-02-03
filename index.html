@@ -50,6 +50,7 @@
             align-items: center;
             gap: 15px;
             min-height: 130px;
+            position: relative;
         }
 
         button {
@@ -59,7 +60,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.2s ease-out; /* Fast transition for moving */
             width: 85%;
         }
 
@@ -73,7 +74,8 @@
         #noBtn {
             background: #f0f0f0;
             color: #777;
-            position: relative;
+            position: relative; /* Starts in the box */
+            transition: left 0.2s ease, top 0.2s ease; /* Makes it "slide" away */
         }
 
         @keyframes pulse {
@@ -139,20 +141,27 @@
     const h1 = document.querySelector("h1");
     const sound = document.getElementById("loveSound");
 
+    // This function makes the No button jump to a random spot on the screen
     function moveButton() {
-        // Keeps the button within the visible viewport padding
-        const padding = 20;
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
+        const padding = 50; // Keeps it away from the very edge of the screen
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
         
-        noBtn.style.position = "fixed";
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+        
+        noBtn.style.position = "fixed"; 
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
         noBtn.style.zIndex = "1000";
     }
 
-    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
+    // Trigger movement on both hover (desktop) and tap (mobile)
     noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Prevents the phone from clicking it before it moves
+        moveButton();
+    });
 
     function createFloatingEffect() {
         const item = document.createElement("div");
@@ -172,11 +181,12 @@
         btns.style.display = "none";
         h1.style.display = "none";
         msg.style.display = "block";
+        noBtn.style.display = "none"; // Hide the No button only AFTER Yes is clicked
+        
         sound.play().catch(() => {});
 
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
-        // Celebration burst
         for (let i = 0; i < 50; i++) {
             setTimeout(createFloatingEffect, i * 60);
         }
